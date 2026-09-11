@@ -2,7 +2,8 @@
     "name": "TouristFlowBalancer.Logic",
     "rootNamespace": "TouristFlowBalancer.Logic",
     "references": [
-        "TouristFlowBalancer.Core"
+        "TouristFlowBalancer.Core",
+        "TouristFlowBalancer.Infra"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

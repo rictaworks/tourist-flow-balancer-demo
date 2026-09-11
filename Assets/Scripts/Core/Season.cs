@@ -58,10 +58,26 @@ namespace TouristFlowBalancer.Core
             return false;
         }
 
-        /// <summary>指定した日の基準来訪数（揺らぎなし。平日1,200／週末1,800。3.3節）。</summary>
+        /// <summary>
+        /// 指定した日の基準来訪数（揺らぎなし。平日1,200／週末1,800、雨の日は×0.85。3.3節）。
+        /// 配分予測（F3・関数H）はこの値をそのまま使う（揺らぎを含まない）。
+        /// <see cref="Events"/> が未生成（関数A実行前のbareなSeasonや既存テスト）の場合は
+        /// 雨判定ができないため、weekday/weekend の基準値のみを返す（後方互換のための防御）。
+        /// </summary>
         public int BaseArrivals(int day)
         {
-            return IsWeekend(day) ? GameConstants.BaseArrivalsWeekend : GameConstants.BaseArrivalsWeekday;
+            int baseValue = IsWeekend(day) ? GameConstants.BaseArrivalsWeekend : GameConstants.BaseArrivalsWeekday;
+
+            if (Events != null && day >= 1 && day <= Events.Length)
+            {
+                EventDay eventDay = Events[day - 1];
+                if (eventDay != null && eventDay.Kind == EventKind.Rain)
+                {
+                    baseValue = (int)(baseValue * GameConstants.RainArrivalsFactor);
+                }
+            }
+
+            return baseValue;
         }
 
         public RegionState GetRegionState(int regionId)

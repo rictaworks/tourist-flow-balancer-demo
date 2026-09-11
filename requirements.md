@@ -1026,7 +1026,7 @@ flowchart LR
 - 表示はプリミティブ（Quad・Circle相当のスプライトをコード生成）とuGUIの既定フォントのみを用いる。
 - 地図は架空の配置であり、実在の地図データ・地名を用いない。
 - データ保存はPlayerPrefsのみ。WebGLではブラウザのIndexedDBに保存されるため、書き込み後に明示的に保存を確定する。
-- ビルドは `Unity.exe -batchmode -nographics -executeMethod BuildScript.BuildWebGL` でCLI実行する。
+- ビルドは `Unity.exe -batchmode -nographics -executeMethod BuildScript.BuildWebGL -quit` でCLI実行する。
 - Unity Playへのアップロードのみ人間が手動で行う。
 - 外部通信（Unity Analytics・広告・ランキング等）を一切含めない。
 

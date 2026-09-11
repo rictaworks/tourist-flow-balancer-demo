@@ -45,7 +45,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **ビルド**（CLI・バッチモード）：
   ```
-  Unity.exe -batchmode -nographics -executeMethod BuildScript.BuildWebGL
+  Unity.exe -batchmode -nographics -executeMethod BuildScript.BuildWebGL -quit
   ```
   `BuildScript.cs` は `Assets/Editor/` に置く（未実装。requirements.md 14.5節）。
 - **テスト**：Unity Test Framework（NUnit）を使う。Editor から実行するほか、CLIでも実行できる（例：`Unity.exe -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults results.xml`）。単一テストのみ実行する場合は `-testFilter <クラス名または完全修飾テスト名>` を付ける。テストコードは `Assets/Scripts/` の各層に対応するテストアセンブリに置く（未実装のため、具体的な配置は実装時に確定する）。

@@ -1,0 +1,16 @@
+{
+    "name": "TouristFlowBalancer.Logic",
+    "rootNamespace": "TouristFlowBalancer.Logic",
+    "references": [
+        "TouristFlowBalancer.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "TouristFlowBalancer.Core",
-        "TouristFlowBalancer.Infra"
+        "TouristFlowBalancer.Infra",
+        "TouristFlowBalancer.Logic"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,3 +1,6 @@
+using TouristFlowBalancer.Infra;
+using TouristFlowBalancer.Logic;
+using TouristFlowBalancer.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,8 +11,9 @@ namespace TouristFlowBalancer.Bootstrap
     /// requirements.md 14.3節：シーン・UI・オブジェクトはすべて起動時にコードで動的生成し、
     /// Prefab・シーンファイルの手作業編集を前提としない。
     ///
-    /// このクラスは基盤issueの範囲として、起動時に最小限の土台（EventSystem・Canvas）だけを
-    /// コードで生成する。実際の画面（地図・施策パネル等）は以降のUI issueがこのCanvas上に構築する。
+    /// 起動時にEventSystem・Canvasの土台を構築したのち、<see cref="Persistence"/>（保存・日次リセット）と
+    /// <see cref="GameFlow"/>（状態遷移）を組み立て、<see cref="UIPresenter"/>へ渡してCanvas上に
+    /// 5画面（タイトル・計画・流入・日次レポート・シーズン結果）を構築させる（10章 classDiagram）。
     /// </summary>
     public static class GameBootstrap
     {
@@ -28,7 +32,13 @@ namespace TouristFlowBalancer.Bootstrap
             Object.DontDestroyOnLoad(root);
 
             BuildEventSystem(root.transform);
-            BuildCanvas(root.transform);
+            GameObject canvasObject = BuildCanvas(root.transform);
+
+            var persistence = new Persistence();
+            var gameFlow = new GameFlow(persistence);
+
+            var presenter = canvasObject.AddComponent<UIPresenter>();
+            presenter.Initialize(canvasObject.transform, gameFlow);
         }
 
         private static void BuildEventSystem(Transform parent)
@@ -44,7 +54,7 @@ namespace TouristFlowBalancer.Bootstrap
             eventSystemObject.AddComponent<StandaloneInputModule>();
         }
 
-        private static void BuildCanvas(Transform parent)
+        private static GameObject BuildCanvas(Transform parent)
         {
             var canvasObject = new GameObject("Canvas", typeof(RectTransform));
             canvasObject.transform.SetParent(parent, false);
@@ -57,6 +67,8 @@ namespace TouristFlowBalancer.Bootstrap
             scaler.referenceResolution = new Vector2(1280, 720);
 
             canvasObject.AddComponent<GraphicRaycaster>();
+
+            return canvasObject;
         }
     }
 }

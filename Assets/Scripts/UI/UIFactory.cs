@@ -18,17 +18,23 @@ namespace TouristFlowBalancer.UI
         /// Unityの真のビルトインフォント（LegacyRuntime.ttf）は日本語グリフを一切持たず、
         /// 実機（WebGLビルドをブラウザで確認）では本文の日本語がすべて空白になる
         /// （Unity既定フォントの既知の制約。robo-farm-rules-demo で先に踏んだ問題と同型）。
-        /// このため、Assets/Resources/Fonts/ に同梱した Noto Sans JP（SIL Open Font License 1.1、
+        /// このため、Assets/Resources/Fonts/ に同梱した M PLUS 1p（SIL Open Font License 1.1、
         /// 再配布可）を「uGUIの既定として使うフォント」として読み込む。TextMeshPro・カスタムの
         /// フォントアセット機能（マテリアル調整等）は使わず、Text コンポーネントの font 参照を
         /// 差し替えるだけなので、14.3節「uGUI既定フォントのみ」の範囲内に収まる。
         /// 万一同梱フォントが読み込めない場合はUnityのビルトインへ後退する（表示が完全に消えるより安全）。
+        ///
+        /// 注記（2026-09-12実機確認）：Google FontsのNoto Sans JPはバリアブルフォント（VF）版のみが
+        /// 配布されており、Unity 6のuGUI Text（Legacy）がVFフォントのグリフをレンダリングしようとすると
+        /// ネイティブのフォントエンジン内で無限再帰（RangeError: Maximum call stack size exceeded）を
+        /// 起こし、WebGLビルドが起動直後にフリーズする。静的ウェイト（Variableでない）のフォントに
+        /// 差し替える必要があり、M PLUS 1p（同じくSIL OFL、静的ウェイト配布あり）に変更した。
         /// </summary>
         public static Font DefaultFont()
         {
             if (_defaultFont == null)
             {
-                _defaultFont = Resources.Load<Font>("Fonts/NotoSansJP-VF");
+                _defaultFont = Resources.Load<Font>("Fonts/MPLUS1p-Regular");
                 if (_defaultFont == null)
                 {
                     _defaultFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");

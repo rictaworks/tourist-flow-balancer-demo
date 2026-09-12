@@ -1,12 +1,10 @@
 {
-    "name": "TouristFlowBalancer.Bootstrap",
-    "rootNamespace": "TouristFlowBalancer.Bootstrap",
+    "name": "TouristFlowBalancer.UI",
+    "rootNamespace": "TouristFlowBalancer.UI",
     "references": [
         "UnityEngine.UI",
         "TouristFlowBalancer.Core",
-        "TouristFlowBalancer.Infra",
-        "TouristFlowBalancer.Logic",
-        "TouristFlowBalancer.UI"
+        "TouristFlowBalancer.Logic"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
